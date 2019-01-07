@@ -15,13 +15,12 @@ CURRENTVID=$( sqlite3 mydatabase.db "select * from version" )
 if [$VERSIONID -gt $CURRENTVID]
 then
 while IFS= read -r cmd do 
-echo sqlite3 mydatabase.db $cmd
-echo sqlite3 mydatabase.db \'update version set versionid = $VERSIONID\'
+eval sqlite3 mydatabase.db $cmd
+eval sqlite3 mydatabase.db \'update version set versionid = $VERSIONID\'
 done < $cmd
 done < orderedList.txt
 else 
 echo " > Latest version is already on the database"
 fi
 echo " > "
-echo " > Print contents of database"
-eval sqlite3 mydatabase.db 'select * from names'
+
